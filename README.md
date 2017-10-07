@@ -14,7 +14,9 @@ or
 pip install Django
 ```
 
-and install baseapp
+and install **[baseapp](https://github.com/Nelestya/baseapp)**
+
+
 
 ## Getting Started
 add your file settings project the application baseapp
