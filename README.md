@@ -1,4 +1,4 @@
-# Blog
+# blog
 
 Blog is an application django and extension a baseapp
 
@@ -39,11 +39,11 @@ The goal is to create a website and the ability to learn and easily modify it
 ## Installation
 
 ```
-git clone https://github.com/Nelestya/Blog.git
+git clone https://github.com/Nelestya/blog.git
 ```
 
 ## Authors
-* **Dlugosz Tristan** - *Initial work* - [baseapp](https://github.com/Nelestya/tools)
+* **Dlugosz Tristan** - *Initial work* - [baseapp](https://github.com/Nelestya/blog)
 
 ## License
 
