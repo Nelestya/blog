@@ -43,7 +43,7 @@ git clone https://github.com/Nelestya/blog.git
 ```
 
 ## Authors
-* **Dlugosz Tristan** - *Initial work* - [baseapp](https://github.com/Nelestya/blog)
+* **Dlugosz Tristan** - *Initial work* - [blog](https://github.com/Nelestya/blog)
 
 ## License
 
