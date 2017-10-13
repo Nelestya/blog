@@ -4,7 +4,7 @@ from django.core import serializers
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib import admin
-from .models import Post
+from .models import Post, Comment
 
 # Register your models here.
 
@@ -49,3 +49,5 @@ class PostAdmin(admin.ModelAdmin):
     actions = [export_to_csv, export_as_json]
 
 admin.site.register(Post, PostAdmin)
+
+admin.site.register(Comment)

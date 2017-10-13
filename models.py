@@ -2,13 +2,14 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from baseapp.models import Recently
 # Create your models here.
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
         return super(PublishedManager, self).get_queryset().filter(status='published')
 
-class Post(models.Model):
+class Post(Recently):
     STATUS_CHOICE = (
     ('draft', 'Draft'),
     ('published', 'Published'),
@@ -18,8 +19,6 @@ class Post(models.Model):
     author = models.ForeignKey(User, related_name='blog_posts')
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICE, default='draft')
     activate = models.BooleanField(default=False)
 
@@ -40,10 +39,15 @@ class Post(models.Model):
                                                  self.slug,
                                                  ])
 
-class Comment(models.Model):
+class Comment(Recently):
     mail = models.EmailField()
     pseudo = models.CharField(max_length=30)
     comment = models.TextField()
-    id_post = models.ForeignKey('Post',
+    post = models.ForeignKey('Post',
         on_delete=models.CASCADE,
-        blank=False)
+        blank=False,
+        related_name='comments')
+
+
+    def __str__(self):
+        return 'Commented by {} in {}'.format(pseudo, post)
