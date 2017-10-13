@@ -3,6 +3,8 @@ from django.views import View
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import Post
 from baseapp.models import Application
+from django.core.mail import send_mail
+from .forms import CommentPostForm, EmailPostForm
 
 # Create your views here.
 class PostList(View):
@@ -42,12 +44,13 @@ class PostDetail(View):
                                        publish__year=year,
                                        publish__month=month,
                                        publish__day=day)
+
         context = {'post': post,
                    'applications': applications}
 
         return render(request, 'blog/post/detail.html', context)
 
-class post_share(View):
+class PostShare(View):
     sent = False
 
     def get(self, request, post_id):

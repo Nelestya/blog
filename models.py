@@ -29,6 +29,7 @@ class Post(models.Model):
     class Meta:
         ordering = ('-publish',)
 
+
     def __str__(self):
         return self.title
 
@@ -38,3 +39,11 @@ class Post(models.Model):
                                                  self.publish.strftime('%d'),
                                                  self.slug,
                                                  ])
+
+class Comment(models.Model):
+    mail = models.EmailField()
+    pseudo = models.CharField(max_length=30)
+    comment = models.TextField()
+    id_post = models.ForeignKey('Post',
+        on_delete=models.CASCADE,
+        blank=False)
