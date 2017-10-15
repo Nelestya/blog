@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from .models import Post
+from .models import Post, Comment
 from baseapp.models import Application
 from django.core.mail import send_mail
 from .forms import CommentPostForm, EmailPostForm
@@ -44,11 +44,18 @@ class PostDetail(View):
                                        publish__year=year,
                                        publish__month=month,
                                        publish__day=day)
+        try:
+            comments = Comment.objects.all().filter(post=post.id)
+        except:
+            pass
 
         context = {'post': post,
-                   'applications': applications}
+                   'applications': applications,
+                   'comments': comments}
 
         return render(request, 'blog/post/detail.html', context)
+
+
 
 class PostShare(View):
     sent = False

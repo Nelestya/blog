@@ -42,7 +42,7 @@ class Post(Recently):
 class Comment(Recently):
     mail = models.EmailField()
     pseudo = models.CharField(max_length=30)
-    comment = models.TextField()
+    body = models.TextField()
     post = models.ForeignKey('Post',
         on_delete=models.CASCADE,
         blank=False,
@@ -50,4 +50,4 @@ class Comment(Recently):
 
 
     def __str__(self):
-        return 'Commented by {} in {}'.format(pseudo, post)
+        return 'Commented by {} in {}'.format(self.pseudo, self.post)

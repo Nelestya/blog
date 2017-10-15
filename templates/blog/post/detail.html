@@ -22,8 +22,10 @@
 
    {% for comment in comments %}
        <div class="comment">
-           <p class="info">Comment {{ forloop.counter }} by {{ comment.name }} {{ comment.created }}</p>
+           <p class="info">Comment {{ forloop.counter }} by {{ comment.pseudo }}</p>
+           <p>{{ comment.created }}</p>
            {{ comment.body|linebreaks }}
+           <hr>
        </div>
    {% empty %}
        <p>There are no comments yet.</p>
@@ -39,5 +41,5 @@
            <p><input type="submit" value="Add comment"></p>
        </form>
    {%  endif %}
-<div>
+</div>
 {% endblock %}
