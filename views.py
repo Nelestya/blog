@@ -61,11 +61,13 @@ class PostShare(View):
     sent = False
 
     def get(self, request, post_id):
+        applications = Application.objects.all()
         form = EmailPostForm()
         post = get_object_or_404(Post, id=post_id, status='published')
 
 
         context = {'post': post,
+                   'applications': applications,
                    'form': form,
                    'sent': self.sent}
 
