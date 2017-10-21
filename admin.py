@@ -2,7 +2,7 @@ import csv
 import datetime
 from django.core import serializers
 from django.http import HttpResponse
-from django.core.urlresolvers import reverse
+
 from django.contrib import admin
 from .models import Post, Comment
 
