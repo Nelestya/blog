@@ -37,12 +37,16 @@
    {% if new_comment %}
        <h2>Your comment has been added.</h2>
    {% else %}
+   <div class="grid-x grid-padding-x">
+  <div class="medium-6 cell">
        <h2>Add a new comment</h2>
-       <form action="." method="post">
+       <form action="." method="post" id="formcommentpost">
            {{ comment_form.as_p }}
            {% csrf_token %}
-           <p><input type="submit" value="Add comment"></p>
+           <button class="button large expanded" type="submit" form="formcommentpost" value="send e-mail">Add comment</button>
        </form>
+    </div>
+  </div>
    {%  endif %}
 </div>
 {% endblock %}

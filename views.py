@@ -1,3 +1,4 @@
+from django.http import HttpResponse, QueryDict
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -36,9 +37,34 @@ class PostDetail(View):
     """
         Detail of post
     """
+    applications = Application.objects.all()
 
     def get(self, request, year, month, day, post):
-        applications = Application.objects.all()
+        post = get_object_or_404(Post, slug=post,
+                                       status='published',
+                                       publish__year=year,
+                                       publish__month=month,
+                                       publish__day=day)
+
+        try:
+            comments = Comment.objects.all().filter(post=post.id)
+        except:
+            pass
+
+        comment_form = CommentPostForm()
+
+        context = {
+                    'post': post,
+                    'applications': self.applications,
+                    'comments': comments,
+                    'comment_form': comment_form
+                    }
+
+        return render(request, 'blog/post/detail.html', context)
+
+
+    def post(self, request, year, month, day, post):
+
         post = get_object_or_404(Post, slug=post,
                                        status='published',
                                        publish__year=year,
@@ -49,9 +75,26 @@ class PostDetail(View):
         except:
             pass
 
+        comment_form = CommentPostForm(request.POST)
+
+        if comment_form.is_valid():
+            try:
+                cf_cleaned = comment_form.cleaned_data
+                print(cf_cleaned)
+                insert_db = Comment.objects.create(pseudo=cf_cleaned['pseudo'], mail=cf_cleaned['mail'], body=cf_cleaned['body'], post_id=post.id)
+                insert_db.save()
+                comment_form = CommentPostForm()
+            except Exception as e:
+                flag = "Exception while processing. (%s)" % e
+
+
+
+
         context = {'post': post,
-                   'applications': applications,
-                   'comments': comments}
+                   'applications': self.applications,
+                   'comments': comments,
+                   'comment_form': comment_form
+                   }
 
         return render(request, 'blog/post/detail.html', context)
 
@@ -59,15 +102,15 @@ class PostDetail(View):
 
 class PostShare(View):
     sent = False
+    applications = Application.objects.all()
 
     def get(self, request, post_id):
-        applications = Application.objects.all()
         form = EmailPostForm()
         post = get_object_or_404(Post, id=post_id, status='published')
 
 
         context = {'post': post,
-                   'applications': applications,
+                   'applications': self.applications,
                    'form': form,
                    'sent': self.sent}
 
@@ -86,6 +129,7 @@ class PostShare(View):
 
         context = {'post': post,
                    'form': form,
+                   'applications': self.applications,
                    'sent': self.sent
                    }
         return render(request, 'blog/post/share.html', context)
