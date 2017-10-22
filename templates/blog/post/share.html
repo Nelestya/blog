@@ -8,10 +8,10 @@
     <p>"{{ post.title }}" was succefully sent by e-mail</p>
   {% else %}
    <h1>Share "{{ post.title }}" by e-mail</h1>
-   <form action="." method="post">
+   <form action="." method="post" id="formsharepost">
      {{ form.as_p }}
      {% csrf_token %}
-    <button class="button large expanded" type="submit" form="formproduct" value="send e-mail">send e-mail</button>
+    <button class="button large expanded" type="submit" form="formsharepost" value="send e-mail">send e-mail</button>
   </form>
   {% endif %}
 </div>

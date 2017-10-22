@@ -81,7 +81,7 @@ class PostShare(View):
             post_url = request.build_absolute_uri(post.get_absolute_url())
             subject = '{} ({}) recommends you reading "{}"'.format(cd['name'], cd['email'], self.post.title)
             message = 'Read "{}" at {}\n\n{}\'s comments: {}'.format(post.title, post_url, cd['name'], cd['comments'])
-            send_mail(subject, message, 'tristand.pro@gmail.com', [cd['to']])
+            send_mail(subject, message, 'youradress.mail@host.com', [cd['to']])
             self.sent = True
 
         context = {'post': post,

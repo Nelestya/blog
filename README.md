@@ -27,13 +27,23 @@ urlpatterns = [
     url(r'^/blog', include('blog.urls')),
     ]
 ```
+in settings.py for Email
+```
+#EMAIL
+EMAIL_HOST = None
+EMAIL_PORT = None
+EMAIL_HOST_USER = None
+EMAIL_HOST_PASSWORD = None
+EMAIL_USE_TLS = None
+EMAIL_USE_SSL = None
+```
 
 and use this command
 
 ```
 python3 manage.py makemigrations
 python3 manage.py migrate
-``` 
+```
 
 ## Motivation
 The goal is to create a website and the ability to learn and easily modify it
