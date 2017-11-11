@@ -6,9 +6,10 @@ from .models import Post, Comment
 from baseapp.models import Application
 from django.core.mail import send_mail
 from .forms import CommentPostForm, EmailPostForm
+from baseapp.views import FieldsView
 
 # Create your views here.
-class PostList(View):
+class PostList(FieldsView):
     """
         list the posts
     """
@@ -29,11 +30,13 @@ class PostList(View):
 
         context = {'posts': posts,
                    'page': page,
-                   'applications': applications}
+                   'fields': self.fields,
+                   }
 
         return render(request, 'blog/post/list.html', context)
 
-class PostDetail(View):
+
+class PostDetail(FieldsView):
     """
         Detail of post
     """
@@ -55,7 +58,7 @@ class PostDetail(View):
 
         context = {
                     'post': post,
-                    'applications': self.applications,
+                    'fields': self.fields,
                     'comments': comments,
                     'comment_form': comment_form
                     }
@@ -91,7 +94,7 @@ class PostDetail(View):
 
 
         context = {'post': post,
-                   'applications': self.applications,
+                   'fields': self.fields,
                    'comments': comments,
                    'comment_form': comment_form
                    }
@@ -100,7 +103,7 @@ class PostDetail(View):
 
 
 
-class PostShare(View):
+class PostShare(FieldsView):
     sent = False
     applications = Application.objects.all()
 
@@ -110,7 +113,7 @@ class PostShare(View):
 
 
         context = {'post': post,
-                   'applications': self.applications,
+                   'fields': self.fields,
                    'form': form,
                    'sent': self.sent}
 
@@ -129,7 +132,13 @@ class PostShare(View):
 
         context = {'post': post,
                    'form': form,
-                   'applications': self.applications,
+                   'fields': self.fields,
                    'sent': self.sent
                    }
         return render(request, 'blog/post/share.html', context)
+
+class Admin_Post_Preview(FieldsView):
+
+    def get(self, request, post_id):
+        post = get_object_or_404(Post, id=post_id)
+        return render(request, 'admin/blog/preview.html', {'post': post})

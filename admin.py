@@ -38,9 +38,13 @@ def export_to_csv(modeladmin, request, queryset):
     return response
 export_to_csv.short_description = 'Export to CSV'
 
+def post_preview(obj):
+    return '<a href="{}">Preview</a>'.format(reverse('blog:admin_post_preview', args=[obj.id]))
+post_preview.allow_tags = True
+
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'slug', 'author', 'publish', 'status', 'activate']
-    list_filter = ['status', 'created', 'updated', 'author', 'activate']
+    list_display = ['title', 'slug', 'author', 'publish', 'status', post_preview]
+    list_filter = ['status', 'created', 'updated', 'author']
     search_fields = ['title', 'body']
     prepopulated_fields = {'slug': ('title',)}
     raw_id_fields = ['author',]

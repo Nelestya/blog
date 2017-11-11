@@ -20,7 +20,6 @@ class Post(Recently):
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=10, choices=STATUS_CHOICE, default='draft')
-    activate = models.BooleanField(default=False)
     image = models.ImageField(upload_to='post/%Y/%m/%d', blank=True)
     image_description = models.CharField(max_length=60)
     objects = models.Manager() # The default manager.
